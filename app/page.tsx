@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, ClipboardEvent, useState } from "react";
 
 export default function Home() {
   const [csvContent, setCsvContent] = useState<string>("");
@@ -18,6 +18,11 @@ export default function Home() {
     }
   };
 
+  const handlePaste = (event: ClipboardEvent<HTMLTextAreaElement>) => {
+    const text = event.clipboardData.getData("text");
+    setCsvContent(text);
+    event.preventDefault();
+  };
   return (
     <div className="flex flex-row mt-20 mx-5 space-x-5">
       <div className="w-1/6 bg-red-200">1</div>
@@ -44,12 +49,13 @@ export default function Home() {
             <textarea
               placeholder="paste your CSV here"
               value={csvContent}
-              rows={40}
-              readOnly
+              onPaste={handlePaste}
+              onChange={(e) => setCsvContent(e.target.value)}
+              rows={25}
               className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md"
             />
           </div>
-          <div>2</div>
+          <div>2{""}</div>
           <div>3</div>
         </div>
       </div>
