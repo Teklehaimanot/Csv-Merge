@@ -1,5 +1,6 @@
 "use client";
 import { ChangeEvent, ClipboardEvent, useState } from "react";
+import { FaGreaterThan } from "react-icons/fa";
 
 export default function Home() {
   const [csvContent, setCsvContent] = useState<string>("");
@@ -28,7 +29,7 @@ export default function Home() {
       <div className="w-1/6 bg-red-200">1</div>
       <div className="w-5/6 border">
         <div className="flex flex-row">
-          <div className="w-1/3 p-5">
+          <div className="w-2/5 p-5">
             <h1 className="text-blue-700 text-2xl font-bold w-full my-5">
               CSV-MERGE
             </h1>
@@ -55,7 +56,42 @@ export default function Home() {
               className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md"
             />
           </div>
-          <div>2{""}</div>
+          <div className="w-1/5 flex items-center   ">
+            <div className="flex flex-col w-full mx-4">
+              <form className="w-full">
+                <p className=" text-slate-700">Select Column Name</p>
+                <select className="w-full py-3 my-2 text-slate-700 border shadow-md bg-gray-100">
+                  <option value="grapefruit">Grapefruit</option>
+                  <option value="lime">Lime</option>
+                  <option selected value="coconut">
+                    Coconut
+                  </option>
+                  <option value="mango">Mango</option>
+                </select>
+                <div className="my-10">
+                  <span className=" text-slate-700 my-2">
+                    Match string similarity with a CSV column. Set a value and a
+                    minimum similarity percentage.
+                  </span>
+                  <div className="flex flex-row my-3">
+                    <input
+                      type="text"
+                      placeholder="String to match"
+                      className="border py-3 w-3/5 bg-gray-100 shadow-md px-2"
+                    />
+                    <FaGreaterThan className=" m-auto w-1/5" />
+                    <input
+                      type="number"
+                      className="border py-3 w-1/5 bg-gray-100 shadow-md"
+                      value={30}
+                    />
+                  </div>
+                  <div></div>
+                </div>
+              </form>
+              <div>bel</div>
+            </div>
+          </div>
           <div>3</div>
         </div>
       </div>
