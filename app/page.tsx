@@ -86,7 +86,13 @@ export default function Home() {
                       value={30}
                     />
                   </div>
-                  <div></div>
+                  <div className=" my-5">
+                    <input
+                      type="submit"
+                      className="border rounded-md py-2 px-5 shadow-md  bg-blue-700 text-white hover:bg-blue-600"
+                      value="Find"
+                    />
+                  </div>
                 </div>
               </form>
               <div>bel</div>
