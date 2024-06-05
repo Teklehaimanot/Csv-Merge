@@ -13,6 +13,8 @@ export default function Home() {
   const [inputString, setInputString] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(50);
   const [results, setResults] = useState<string>("");
+  const [downloadUrl, setDownloadUrl] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>("");
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -21,11 +23,15 @@ export default function Home() {
 
       reader.onload = (e) => {
         const text = e.target?.result as string;
-        setCsvContent(text);
+        const parsedText = parsePastedText(text);
+        setCsvContent(parsedText);
 
         const lines = text.split("\n");
         if (lines.length > 0) {
-          const headers = lines[0].split(",");
+          console.log(lines[0]);
+          const parsedHeaders = parsePastedText(lines[0]);
+          const headers = parsedHeaders.split(",");
+          console.log(headers);
           setColumns(headers);
         }
       };
@@ -36,8 +42,26 @@ export default function Home() {
 
   const handlePaste = (event: ClipboardEvent<HTMLTextAreaElement>) => {
     const text = event.clipboardData.getData("text");
-    setCsvContent(text);
+    const parsedText = parsePastedText(text);
+    setCsvContent(parsedText);
     event.preventDefault();
+  };
+
+  const parsePastedText = (text: string): string => {
+    // Remove double quotes around values
+    const lines = text.split("\n");
+    const parsedLines = lines.map((line) => {
+      return line
+        .split(",")
+        .map((value) => {
+          if (value.startsWith('"') && value.endsWith('"')) {
+            return value.slice(1, -1);
+          }
+          return value;
+        })
+        .join(",");
+    });
+    return parsedLines.join("\n");
   };
 
   const handleSearchSimilarity = async (event: FormEvent) => {
@@ -50,7 +74,7 @@ export default function Home() {
           csvContent,
           targetString: inputString,
           similarityThreshold: percentage / 100,
-          columnName: "Name",
+          columnName: selectedOption,
         },
         {
           headers: {
@@ -60,6 +84,7 @@ export default function Home() {
       );
       const csvData = jsonToCsv(response.data);
       setResults(csvData);
+      createDownloadLink(csvData);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -73,6 +98,12 @@ export default function Home() {
       return Object.values(row).join(",");
     });
     return [headers, ...rows].join("\n");
+  };
+
+  const createDownloadLink = (csv: string) => {
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    setDownloadUrl(url);
   };
 
   console.log(results);
@@ -114,8 +145,17 @@ export default function Home() {
             <div className="w-1/5 flex items-center   ">
               <div className="flex flex-col w-full mx-4">
                 <form className="w-full" onSubmit={handleSearchSimilarity}>
-                  <p className=" text-slate-700">Select Column Name</p>
-                  <select className="w-full py-3 my-2 text-slate-700 border shadow-md bg-gray-100">
+                  <p className=" text-slate-700">
+                    Select the column name you want to match against:
+                  </p>
+                  <select
+                    className="w-full py-3 my-2 text-slate-700 border shadow-md bg-gray-100"
+                    value={selectedOption}
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                  >
+                    <option value="" disabled>
+                      Select an option
+                    </option>
                     {columns?.map((col) => (
                       <option key={col} value={col}>
                         {col}
@@ -124,8 +164,8 @@ export default function Home() {
                   </select>
                   <div className="my-10">
                     <span className=" text-slate-700 my-2">
-                      Match string similarity with a CSV column. Set a value and
-                      a minimum similarity percentage.
+                      Match string similarity with a CSV column. Enter a text to
+                      match and set a minimum similarity percentage:
                     </span>
                     <div className="flex flex-row my-3">
                       <input
@@ -180,8 +220,17 @@ export default function Home() {
                 value={results}
                 onChange={(e) => setResults(e.target.value)}
                 rows={25}
-                className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md"
+                className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md mb-3"
               />
+              {downloadUrl && (
+                <a
+                  href={downloadUrl}
+                  download="results.csv"
+                  className=" border items-end py-2 px-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3 w-1/6  mx-auto"
+                >
+                  Download
+                </a>
+              )}
             </div>
           </div>
         </div>
