@@ -1,12 +1,18 @@
 "use client";
 import { ChangeEvent, ClipboardEvent, FormEvent, useState } from "react";
 import { FaGreaterThan } from "react-icons/fa";
+import axios from "axios";
+
+interface Result {
+  [key: string]: string;
+}
 
 export default function Home() {
   const [csvContent, setCsvContent] = useState<string>("");
   const [columns, setColumns] = useState<string[]>([]);
   const [inputString, setInputString] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(50);
+  const [results, setResults] = useState<string>("");
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,11 +40,42 @@ export default function Home() {
     event.preventDefault();
   };
 
-  const handleSearchSimilarity = (event: FormEvent) => {
+  const handleSearchSimilarity = async (event: FormEvent) => {
     event.preventDefault();
-    console.log("clicked");
+    try {
+      console.log("clicked");
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/csv/ColumnSimilarity",
+        {
+          csvContent,
+          targetString: inputString,
+          similarityThreshold: percentage / 100,
+          columnName: "Name",
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const csvData = jsonToCsv(response.data);
+      setResults(csvData);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
+  const jsonToCsv = (json: Result[]) => {
+    if (!json || json.length === 0) return "";
+
+    const headers = Object.keys(json[0]).join(",");
+    const rows = json.map((row) => {
+      return Object.values(row).join(",");
+    });
+    return [headers, ...rows].join("\n");
+  };
+
+  console.log(results);
   return (
     <div className="flex flex-row  mx-5 space-x-5">
       <div className="w-1/6  bg-red-300"></div>
@@ -76,7 +113,7 @@ export default function Home() {
             </div>
             <div className="w-1/5 flex items-center   ">
               <div className="flex flex-col w-full mx-4">
-                <form className="w-full">
+                <form className="w-full" onSubmit={handleSearchSimilarity}>
                   <p className=" text-slate-700">Select Column Name</p>
                   <select className="w-full py-3 my-2 text-slate-700 border shadow-md bg-gray-100">
                     {columns?.map((col) => (
@@ -104,10 +141,9 @@ export default function Home() {
                         className="border py-3 w-2/5 bg-gray-100 shadow-md px-3"
                         value={percentage}
                         onChange={(e) => setPercentage(Number(e.target.value))}
-                        onSubmit={handleSearchSimilarity}
                       />
                     </div>
-                    <div className=" my-5">
+                    <div className="my-5">
                       <input
                         type="submit"
                         className="border rounded-md py-3 px-5 shadow-md  bg-blue-700 text-white hover:bg-blue-600"
@@ -141,9 +177,8 @@ export default function Home() {
               <p className="text-slate-700 text-base mt-10">Result</p>
               <textarea
                 placeholder="paste your CSV here"
-                value={csvContent}
-                onPaste={handlePaste}
-                onChange={(e) => setCsvContent(e.target.value)}
+                value={results}
+                onChange={(e) => setResults(e.target.value)}
                 rows={25}
                 className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md"
               />
