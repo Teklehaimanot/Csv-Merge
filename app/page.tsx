@@ -2,6 +2,8 @@
 import { ChangeEvent, ClipboardEvent, FormEvent, useState } from "react";
 import { FaGreaterThan } from "react-icons/fa";
 import axios from "axios";
+import Header from "./components/Header";
+import SideBar from "./components/SideBar";
 
 interface Result {
   [key: string]: string;
@@ -15,6 +17,8 @@ export default function Home() {
   const [results, setResults] = useState<string>("");
   const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
+  const [replacingText, setReplacingText] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -28,10 +32,8 @@ export default function Home() {
 
         const lines = text.split("\n");
         if (lines.length > 0) {
-          console.log(lines[0]);
           const parsedHeaders = parsePastedText(lines[0]);
           const headers = parsedHeaders.split(",");
-          console.log(headers);
           setColumns(headers);
         }
       };
@@ -48,7 +50,6 @@ export default function Home() {
   };
 
   const parsePastedText = (text: string): string => {
-    // Remove double quotes around values
     const lines = text.split("\n");
     const parsedLines = lines.map((line) => {
       return line
@@ -67,7 +68,12 @@ export default function Home() {
   const handleSearchSimilarity = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      console.log("clicked");
+      if (!inputString || !csvContent || !selectedOption) {
+        setError(
+          "All CSV content, target string, and column name are required."
+        );
+        return;
+      }
       const response = await axios.post(
         "http://localhost:5000/api/v1/csv/ColumnSimilarity",
         {
@@ -85,8 +91,17 @@ export default function Home() {
       const csvData = jsonToCsv(response.data);
       setResults(csvData);
       createDownloadLink(csvData);
-    } catch (error) {
+    } catch (error: any) {
+      setError(error.response.data);
       console.error("Error:", error);
+    }
+  };
+
+  const hanldingReplaceText = async (event: FormEvent) => {
+    event.preventDefault();
+    try {
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -106,28 +121,13 @@ export default function Home() {
     setDownloadUrl(url);
   };
 
-  console.log(results);
+  console.log(error);
   return (
     <div className="flex flex-row  mx-5 space-x-5">
-      <div className="w-1/6  bg-red-300"></div>
+      <SideBar />
       <div className="w-5/6 ">
         <div className="flex flex-col  mx-5">
-          <div className="w-2/5  ">
-            <h1 className="text-blue-700 text-2xl font-bold w-full my-5">
-              CSV-MERGE
-            </h1>
-            <p className="text-slate-700 text-base my-3">
-              To get started, upload or paste your data from Excel (saved as CSV
-              or TSV).
-            </p>
-            <p className="text-slate-700 text-base mt-5">Upload a CSV file</p>
-            <input
-              className="border border-gray-300 my-2  py-2 px-4 block w-full focus:outline-none focus:border-blue-400 bg-gray-100 shadow-md"
-              type="file"
-              accept=".csv"
-              onChange={handleFileUpload}
-            />
-          </div>
+          <Header handleFileUpload={handleFileUpload} errors={error} />
           <div className="flex flex-row">
             <div className="w-2/5">
               <p className="text-slate-700 text-base mt-10">
@@ -170,7 +170,7 @@ export default function Home() {
                     <div className="flex flex-row my-3">
                       <input
                         type="text"
-                        placeholder="Text to match"
+                        placeholder="Target String"
                         className="border py-3 w-3/5 bg-gray-100 shadow-md px-2 "
                         onChange={(e) => setInputString(e.target.value)}
                         value={inputString}
@@ -192,25 +192,29 @@ export default function Home() {
                     </div>
                   </div>
                 </form>
-                <div>
-                  <form>
-                    <div className="my-2">
-                      <p className=" text-slate-700">Replace with</p>
-                    </div>
-                    <div className="flex flex-row justify-between">
-                      <input
-                        type="text"
-                        className="border py-3 w-3/5 bg-gray-100 shadow-md px-3"
-                        placeholder="Text to replace"
-                      />
-                      <input
-                        type="submit"
-                        className=" border rounded-md px-3 py-3 shadow-md bg-blue-700 text-white hover:bg-blue-600 "
-                        value="Replace"
-                      />
-                    </div>
-                  </form>
-                </div>
+                {results && (
+                  <div>
+                    <form>
+                      <div className="my-2">
+                        <p className=" text-slate-700">Replace all with</p>
+                      </div>
+                      <div className="flex flex-row justify-between">
+                        <input
+                          type="text"
+                          className="border py-3 w-3/5 bg-gray-100 shadow-md px-3"
+                          placeholder="String to replace"
+                          onChange={(e) => setReplacingText(e.target.value)}
+                          value={replacingText}
+                        />
+                        <input
+                          type="submit"
+                          className=" border rounded-md px-3 py-3 shadow-md bg-blue-700 text-white hover:bg-blue-600 "
+                          value="Replace"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                )}
               </div>
             </div>
             <div className="w-2/5  my-auto">
@@ -222,7 +226,7 @@ export default function Home() {
                 rows={25}
                 className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md mb-3"
               />
-              {downloadUrl && (
+              {downloadUrl && results && (
                 <a
                   href={downloadUrl}
                   download="results.csv"
