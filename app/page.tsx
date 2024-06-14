@@ -15,10 +15,13 @@ export default function Home() {
   const [inputString, setInputString] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(50);
   const [results, setResults] = useState<string>("");
+  const [finalResults, setFinalResults] = useState<string>("");
   const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [replacingText, setReplacingText] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const [mergedDownloadUrl, setMergedDownloadUrl] = useState<string>("");
+  const [mergedCsvContent, setMergedCsvContent] = useState<string>("");
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -99,8 +102,32 @@ export default function Home() {
 
   const hanldingReplaceText = async (event: FormEvent) => {
     event.preventDefault();
+
     try {
-    } catch (error) {
+      if (!replacingText || !results || !selectedOption) {
+        setError(
+          "All CSV result, replacing string, and column name are required."
+        );
+        return;
+      }
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/csv/replaceStrings",
+        {
+          csvResults: results,
+          replacingString: replacingText,
+          columnName: selectedOption,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const csvData = jsonToCsv(response.data);
+      setResults(csvData);
+      createDownloadLink(csvData);
+    } catch (error: any) {
+      setError(error.response.data);
       console.log(error);
     }
   };
@@ -121,7 +148,57 @@ export default function Home() {
     setDownloadUrl(url);
   };
 
-  console.log(error);
+  const handleMergeCsv = () => {
+    // Parse original CSV content into an array of objects
+    const originalData = csvContent
+      .trim()
+      .split("\n")
+      .map((row) => row.split(","));
+    const originalHeaders = originalData[0];
+    const originalRows = originalData.slice(1);
+
+    // Parse results CSV into an array of objects
+    const updatedData = results
+      .trim()
+      .split("\n")
+      .map((row) => row.split(","));
+    const updatedHeaders = updatedData[0];
+    const updatedRows = updatedData.slice(1);
+
+    // Assuming the first column is the unique key for merging
+    const keyIndex = originalHeaders.indexOf(updatedHeaders[0]);
+
+    // Create a mapping of unique key to updated row
+    const updatedMap = updatedRows.reduce((acc, row) => {
+      acc[row[0]] = row;
+      return acc;
+    }, {} as { [key: string]: string[] });
+
+    // Merge the original and updated data
+    const mergedRows = originalRows.map((row) => {
+      const key = row[keyIndex];
+      if (updatedMap[key]) {
+        return updatedMap[key];
+      }
+      return row;
+    });
+
+    // Combine headers and rows to form a CSV
+    const mergedCsv = [originalHeaders, ...mergedRows]
+      .map((row) => row.join(","))
+      .join("\n");
+
+    setMergedCsvContent(mergedCsv);
+    createDownloadLinkForMergedCsv(mergedCsv);
+  };
+
+  const createDownloadLinkForMergedCsv = (csv: string) => {
+    const blob = new Blob([csv], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    setMergedDownloadUrl(url);
+  };
+
+  console.log(finalResults);
   return (
     <div className="flex flex-row  mx-5 space-x-5">
       <SideBar />
@@ -194,7 +271,7 @@ export default function Home() {
                 </form>
                 {results && (
                   <div>
-                    <form>
+                    <form onSubmit={hanldingReplaceText}>
                       <div className="my-2">
                         <p className=" text-slate-700">Replace all with</p>
                       </div>
@@ -213,6 +290,25 @@ export default function Home() {
                         />
                       </div>
                     </form>
+                    <div className="w-1/5 flex items-center">
+                      <div className="flex flex-col w-full mx-5">
+                        <button
+                          onClick={handleMergeCsv}
+                          className="mt-5 bg-blue-500 text-white p-2 rounded shadow"
+                        >
+                          Merge CSV
+                        </button>
+                        {mergedDownloadUrl && (
+                          <a
+                            href={mergedDownloadUrl}
+                            download="merged.csv"
+                            className="mt-3 text-blue-700 underline"
+                          >
+                            Download Merged CSV
+                          </a>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 )}
               </div>
