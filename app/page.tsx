@@ -22,6 +22,8 @@ export default function Home() {
   const [error, setError] = useState<string>("");
   const [mergedDownloadUrl, setMergedDownloadUrl] = useState<string>("");
   const [mergedCsvContent, setMergedCsvContent] = useState<string>("");
+  const [prevResults, setPrevResults] = useState<string>("");
+  const [isreplaced, setIsReplaced] = useState<boolean>(false);
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -93,6 +95,7 @@ export default function Home() {
       );
       const csvData = jsonToCsv(response.data);
       setResults(csvData);
+      setPrevResults(csvData);
       createDownloadLink(csvData);
     } catch (error: any) {
       setError(error.response.data);
@@ -126,6 +129,7 @@ export default function Home() {
       const csvData = jsonToCsv(response.data);
       setResults(csvData);
       createDownloadLink(csvData);
+      setIsReplaced(true);
     } catch (error: any) {
       setError(error.response.data);
       console.log(error);
@@ -135,11 +139,31 @@ export default function Home() {
   const jsonToCsv = (json: Result[]) => {
     if (!json || json.length === 0) return "";
 
-    const headers = Object.keys(json[0]).join(",");
-    const rows = json.map((row) => {
-      return Object.values(row).join(",");
+    const headers = Object.keys(json[0]);
+    const csvRows = [];
+    csvRows.push(headers.join(","));
+
+    json.forEach((obj) => {
+      const values = headers.map((header) => {
+        let value = obj[header];
+        // Convert non-string values to string
+        if (typeof value !== "string") {
+          value = String(value);
+        }
+        // Wrap the value in quotes if it contains special characters
+        if (
+          value.includes(",") ||
+          value.includes('"') ||
+          value.includes("\n")
+        ) {
+          value = `"${value.replace(/"/g, '""')}"`;
+        }
+        return value;
+      });
+      csvRows.push(values.join(","));
     });
-    return [headers, ...rows].join("\n");
+
+    return csvRows.join("\n");
   };
 
   const createDownloadLink = (csv: string) => {
@@ -148,11 +172,35 @@ export default function Home() {
     setDownloadUrl(url);
   };
 
-  // const handleMergeCsv = () => {
+  const handleMergeCsv = async () => {
+    try {
+      if (!prevResults || !csvContent || !results) {
+        setError(
+          "All CSV content, target string, and column name are required."
+        );
+        return;
+      }
 
-  //   setMergedCsvContent(mergedCsv);
-  //   createDownloadLinkForMergedCsv(mergedCsv);
-  // };
+      const response = await axios.post(
+        "http://localhost:5000/api/v1/csv/csvMerge",
+        {
+          csvFilteredResult: prevResults,
+          csvOriginal: csvContent,
+          csvToBeReplaced: results,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const csvData = jsonToCsv(response.data);
+      setMergedCsvContent(csvData);
+      createDownloadLinkForMergedCsv(csvData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const createDownloadLinkForMergedCsv = (csv: string) => {
     const blob = new Blob([csv], { type: "text/csv" });
@@ -160,7 +208,6 @@ export default function Home() {
     setMergedDownloadUrl(url);
   };
 
-  console.log(finalResults);
   return (
     <div className="flex flex-row  mx-5 space-x-5">
       <SideBar />
@@ -254,6 +301,16 @@ export default function Home() {
                     </form>
                   </div>
                 )}
+                <div className="my-5">
+                  {isreplaced && (
+                    <div
+                      className="border rounded-md px-3 py-3 shadow-md bg-blue-700 text-white hover:bg-blue-600"
+                      onClick={handleMergeCsv}
+                    >
+                      Merge Csv
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="w-2/5  my-auto">
@@ -265,14 +322,26 @@ export default function Home() {
                 rows={25}
                 className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md mb-3"
               />
+
               {downloadUrl && results && (
-                <a
-                  href={downloadUrl}
-                  download="results.csv"
-                  className=" border items-end py-2 px-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3 w-1/6  mx-auto"
-                >
-                  Download
-                </a>
+                <div className=" space-x-10">
+                  <a
+                    href={downloadUrl}
+                    download="results.csv"
+                    className=" border items-end py-2 px-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3 w-1/6  mx-auto"
+                  >
+                    Download Result
+                  </a>
+                  {mergedDownloadUrl && (
+                    <a
+                      href={mergedDownloadUrl}
+                      download={"final.csv"}
+                      className="border items-end py-2 px-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3 w-1/6  mx-auto"
+                    >
+                      Dwonload Merged Result
+                    </a>
+                  )}
+                </div>
               )}
             </div>
           </div>
