@@ -15,7 +15,6 @@ export default function Home() {
   const [inputString, setInputString] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(50);
   const [results, setResults] = useState<string>("");
-  const [finalResults, setFinalResults] = useState<string>("");
   const [downloadUrl, setDownloadUrl] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [replacingText, setReplacingText] = useState<string>("");
@@ -34,6 +33,12 @@ export default function Home() {
         const text = e.target?.result as string;
         const parsedText = parsePastedText(text);
         setCsvContent(parsedText);
+        setResults("");
+        setPrevResults("");
+        setMergedCsvContent("");
+        setReplacingText("");
+        setInputString("");
+        setIsReplaced(false);
 
         const lines = text.split("\n");
         if (lines.length > 0) {
