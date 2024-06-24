@@ -1,6 +1,7 @@
 "use client";
 import { ChangeEvent, ClipboardEvent, FormEvent, useState } from "react";
 import { FaGreaterThan } from "react-icons/fa";
+import { FaFileDownload } from "react-icons/fa";
 import axios from "axios";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
@@ -309,10 +310,10 @@ export default function Home() {
                 <div className="my-5">
                   {isreplaced && (
                     <div
-                      className="border rounded-md px-3 py-3 shadow-md bg-blue-700 text-white hover:bg-blue-600"
+                      className="border rounded-md p-3 shadow-md bg-blue-700 text-white hover:bg-blue-600 "
                       onClick={handleMergeCsv}
                     >
-                      Merge Csv
+                      <span> Merge Csv</span>
                     </div>
                   )}
                 </div>
@@ -325,25 +326,26 @@ export default function Home() {
                 value={results}
                 onChange={(e) => setResults(e.target.value)}
                 rows={25}
+                readOnly
                 className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md mb-3"
               />
 
               {downloadUrl && results && (
-                <div className=" space-x-10">
+                <div className=" flex justify-between flex-wrap  w-full">
                   <a
                     href={downloadUrl}
                     download="results.csv"
-                    className=" border items-end py-2 px-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3 w-1/6  mx-auto"
+                    className=" border p-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3  flex flex-row items-center space-x-3"
                   >
-                    Download Result
+                    <FaFileDownload /> <span>Result</span>
                   </a>
                   {mergedDownloadUrl && (
                     <a
                       href={mergedDownloadUrl}
                       download={"final.csv"}
-                      className="border items-end py-2 px-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3 w-1/6  mx-auto"
+                      className="border p-3 mb-5 bg-blue-700 text-white rounded-md hover:bg-blue-600 my-3  flex flex-row items-center space-x-3  "
                     >
-                      Dwonload Merged Result
+                      <FaFileDownload /> <span>Merged Csv</span>
                     </a>
                   )}
                 </div>
