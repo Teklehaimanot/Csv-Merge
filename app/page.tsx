@@ -5,6 +5,7 @@ import { FaFileDownload } from "react-icons/fa";
 import axios from "axios";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
+import Papa from "papaparse";
 
 interface Result {
   [key: string]: string;
@@ -32,21 +33,26 @@ export default function Home() {
 
       reader.onload = (e) => {
         const text = e.target?.result as string;
-        const parsedText = parsePastedText(text);
-        setCsvContent(parsedText);
-        setResults("");
-        setPrevResults("");
-        setMergedCsvContent("");
-        setReplacingText("");
-        setInputString("");
-        setIsReplaced(false);
 
-        const lines = text.split("\n");
-        if (lines.length > 0) {
-          const parsedHeaders = parsePastedText(lines[0]);
-          const headers = parsedHeaders.split(",");
-          setColumns(headers);
-        }
+        // Use PapaParse to parse the CSV content
+        Papa.parse(text, {
+          header: true,
+          skipEmptyLines: true,
+          complete: (results) => {
+            const parsedHeaders = results.meta.fields || [];
+            setCsvContent(text); // Original CSV content as text
+            setResults("");
+            setPrevResults("");
+            setMergedCsvContent("");
+            setReplacingText("");
+            setInputString("");
+            setIsReplaced(false);
+            setColumns(parsedHeaders); // Set columns from parsed headers
+          },
+          error: (error: any) => {
+            console.error("Error parsing CSV:", error);
+          },
+        });
       };
 
       reader.readAsText(file);
