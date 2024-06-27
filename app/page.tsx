@@ -6,10 +6,7 @@ import axios from "axios";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
 import Papa from "papaparse";
-
-interface Result {
-  [key: string]: string;
-}
+import { parse } from "json2csv";
 
 export default function Home() {
   const [csvContent, setCsvContent] = useState<string>("");
@@ -23,6 +20,8 @@ export default function Home() {
   const [error, setError] = useState<string>("");
   const [mergedDownloadUrl, setMergedDownloadUrl] = useState<string>("");
   const [mergedCsvContent, setMergedCsvContent] = useState<string>("");
+  const [csvTotal, setCsvTotal] = useState<number>(0);
+  const [csvResultLength, setResultCsvLength] = useState<number>(0);
   const [prevResults, setPrevResults] = useState<string>("");
   const [isreplaced, setIsReplaced] = useState<boolean>(false);
 
@@ -40,14 +39,22 @@ export default function Home() {
           skipEmptyLines: true,
           complete: (results) => {
             const parsedHeaders = results.meta.fields || [];
-            setCsvContent(text); // Original CSV content as text
+            const parsedData = results.data;
+            setCsvTotal(parsedData?.length);
+            const csvText = Papa.unparse(parsedData);
+            setColumns(parsedHeaders);
+            setCsvContent(csvText);
             setResults("");
+            setSelectedOption("");
             setPrevResults("");
             setMergedCsvContent("");
+            setMergedDownloadUrl("");
+            setDownloadUrl("");
             setReplacingText("");
             setInputString("");
+            setResultCsvLength(0);
             setIsReplaced(false);
-            setColumns(parsedHeaders); // Set columns from parsed headers
+            // Set columns from parsed headers
           },
           error: (error: any) => {
             console.error("Error parsing CSV:", error);
@@ -59,6 +66,7 @@ export default function Home() {
     }
   };
 
+  // console.log(csvContent);
   const handlePaste = (event: ClipboardEvent<HTMLTextAreaElement>) => {
     const text = event.clipboardData.getData("text");
     const parsedText = parsePastedText(text);
@@ -105,13 +113,18 @@ export default function Home() {
           },
         }
       );
-      const csvData = jsonToCsv(response.data);
+
+      setResultCsvLength(response.data?.length);
+      const csvData = parse(response.data);
       setResults(csvData);
       setPrevResults(csvData);
       createDownloadLink(csvData);
-    } catch (error: any) {
-      setError(error.response.data);
-      console.error("Error:", error);
+    } catch (err: any) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError("An unexpected error occurred.");
+      }
     }
   };
 
@@ -138,44 +151,18 @@ export default function Home() {
           },
         }
       );
-      const csvData = jsonToCsv(response.data);
+      // console.log(response.data.csvContent, "csv");
+      const csvData = parse(response.data);
       setResults(csvData);
       createDownloadLink(csvData);
       setIsReplaced(true);
-    } catch (error: any) {
-      setError(error.response.data);
-      console.log(error);
+    } catch (err: any) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError("An unexpected error occurred.");
+      }
     }
-  };
-
-  const jsonToCsv = (json: Result[]) => {
-    if (!json || json.length === 0) return "";
-
-    const headers = Object.keys(json[0]);
-    const csvRows = [];
-    csvRows.push(headers.join(","));
-
-    json.forEach((obj) => {
-      const values = headers.map((header) => {
-        let value = obj[header];
-        // Convert non-string values to string
-        if (typeof value !== "string") {
-          value = String(value);
-        }
-        // Wrap the value in quotes if it contains special characters
-        if (
-          value.includes(",") ||
-          value.includes('"') ||
-          value.includes("\n")
-        ) {
-          value = `"${value.replace(/"/g, '""')}"`;
-        }
-        return value;
-      });
-      csvRows.push(values.join(","));
-    });
-
-    return csvRows.join("\n");
   };
 
   const createDownloadLink = (csv: string) => {
@@ -206,11 +193,15 @@ export default function Home() {
           },
         }
       );
-      const csvData = jsonToCsv(response.data);
+      const csvData = parse(response.data);
       setMergedCsvContent(csvData);
       createDownloadLinkForMergedCsv(csvData);
-    } catch (error) {
-      console.log(error);
+    } catch (err: any) {
+      if (axios.isAxiosError(err) && err.response) {
+        setError(err.response.data.error);
+      } else {
+        setError("An unexpected error occurred.");
+      }
     }
   };
 
@@ -220,6 +211,7 @@ export default function Home() {
     setMergedDownloadUrl(url);
   };
 
+  // console.log(results, "rst");
   return (
     <div className="flex flex-row  mx-5 space-x-5">
       <SideBar />
@@ -326,7 +318,14 @@ export default function Home() {
               </div>
             </div>
             <div className="w-2/5  my-auto">
-              <p className="text-slate-700 text-base mt-10">Result</p>
+              <div className="flex flex-row space-x-5">
+                <p className="text-slate-700 text-base mt-10">Result :</p>
+                <p className="text-slate-700 text-base mt-10">
+                  {csvResultLength > 0
+                    ? `${csvResultLength} / ${csvTotal}`
+                    : ""}
+                </p>
+              </div>
               <textarea
                 placeholder="paste your CSV here"
                 value={results}
