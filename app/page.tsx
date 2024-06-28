@@ -32,7 +32,6 @@ export default function Home() {
 
       reader.onload = (e) => {
         const text = e.target?.result as string;
-
         // Use PapaParse to parse the CSV content
         Papa.parse(text, {
           header: true,
@@ -66,28 +65,34 @@ export default function Home() {
     }
   };
 
-  // console.log(csvContent);
   const handlePaste = (event: ClipboardEvent<HTMLTextAreaElement>) => {
-    const text = event.clipboardData.getData("text");
-    const parsedText = parsePastedText(text);
-    setCsvContent(parsedText);
     event.preventDefault();
-  };
-
-  const parsePastedText = (text: string): string => {
-    const lines = text.split("\n");
-    const parsedLines = lines.map((line) => {
-      return line
-        .split(",")
-        .map((value) => {
-          if (value.startsWith('"') && value.endsWith('"')) {
-            return value.slice(1, -1);
-          }
-          return value;
-        })
-        .join(",");
+    const text = event.clipboardData.getData("text");
+    Papa.parse(text, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (results) => {
+        const parsedHeaders = results.meta.fields || [];
+        const parsedData = results.data;
+        setCsvTotal(parsedData?.length);
+        const csvText = Papa.unparse(parsedData);
+        setColumns(parsedHeaders);
+        setCsvContent(csvText);
+        setResults("");
+        setSelectedOption("");
+        setPrevResults("");
+        setMergedCsvContent("");
+        setMergedDownloadUrl("");
+        setDownloadUrl("");
+        setReplacingText("");
+        setInputString("");
+        setResultCsvLength(0);
+        setIsReplaced(false);
+      },
+      error: (error: any) => {
+        console.error("Error parsing pasted CSV:", error);
+      },
     });
-    return parsedLines.join("\n");
   };
 
   const handleSearchSimilarity = async (event: FormEvent) => {
@@ -151,7 +156,6 @@ export default function Home() {
           },
         }
       );
-      // console.log(response.data.csvContent, "csv");
       const csvData = parse(response.data);
       setResults(csvData);
       createDownloadLink(csvData);
@@ -327,7 +331,7 @@ export default function Home() {
                 </p>
               </div>
               <textarea
-                placeholder="paste your CSV here"
+                placeholder="Result ...."
                 value={results}
                 onChange={(e) => setResults(e.target.value)}
                 rows={25}
