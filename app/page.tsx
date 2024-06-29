@@ -218,7 +218,7 @@ export default function Home() {
 
   // console.log(results, "rst");
   return (
-    <div className="flex flex-col  space-y-10">
+    <div className="flex flex-col  space-y-20">
       <div className="flex flex-row  mx-5 space-x-5">
         <SideBar />
         <div className="w-5/6 ">

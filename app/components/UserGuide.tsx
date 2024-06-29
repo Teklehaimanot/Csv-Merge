@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { useState } from "react";
 
 const UserGuide = () => {
@@ -7,7 +8,7 @@ const UserGuide = () => {
   const [showTroubleshooting, setShowTroubleshooting] = useState(false);
 
   return (
-    <div className="mx-auto w-full bg-gray-100 shadow-md">
+    <div className="mx-auto w-full bg-gray-100 shadow-md mb-10">
       <div className="w-2/3 mx-auto flex flex-col space-y-5 my-5">
         <h2 className="text-2xl text-blue-700">User Guide</h2>
         <p className="text-gray-600">
@@ -201,12 +202,12 @@ const UserGuide = () => {
           We hope this guide helps you navigate and utilize the Smart CSV Filter
           & Merger application effectively. For further assistance, refer to our{" "}
           or contact our support team at{" "}
-          <a
-            href="mailto:support@csvtool.com"
+          <Link
+            href="mailto:kelaltech24@gmail.com"
             className="text-blue-500 underline"
           >
-            kelaltech@gmail.com
-          </a>
+            kelaltech24@gmail.com
+          </Link>
           .
         </p>
 

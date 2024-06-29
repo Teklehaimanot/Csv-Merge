@@ -6,9 +6,9 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ handleFileUpload, errors }) => {
   return (
     <div className="flex justify-between">
-      <div className="w-2/5  ">
-        <h1 className="text-blue-700 text-2xl font-bold w-full my-5">
-          Smart CSV Filter & Merger
+      <div className="w-2/5  pt-10">
+        <h1 className="text-blue-700 text-4xl font-bold w-full my-5">
+          SMART CSV FILTER & MERGER
         </h1>
         <p className="text-slate-700 text-base my-3">
           To get started, upload or paste your data from Excel (saved as CSV or
