@@ -8,7 +8,7 @@ const UserGuide = () => {
   const [showTroubleshooting, setShowTroubleshooting] = useState(false);
 
   return (
-    <div className="mx-auto w-full bg-gray-100 shadow-md mb-10">
+    <div className="mx-auto w-full bg-gray-100 shadow-sm  py-5">
       <div className="w-2/3 mx-auto flex flex-col space-y-5 my-5">
         <h2 className="text-2xl text-blue-700">User Guide</h2>
         <p className="text-gray-600">
