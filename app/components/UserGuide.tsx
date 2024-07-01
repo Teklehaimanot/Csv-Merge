@@ -192,8 +192,9 @@ const UserGuide = () => {
                 input string is correct.
               </li>
               <li>
-                <strong>Errors in Replacement:</strong> Ensure that the "Replace
-                With" field is not empty when replacing the filtered results.
+                <strong>Errors in Replacement:</strong> Ensure that the
+                &quot;Replace With&quot; field is not empty when replacing the
+                filtered results.
               </li>
             </ul>
           </div>
