@@ -31,7 +31,7 @@ const UserGuide = () => {
               <li>
                 <strong>1. Upload a CSV File:</strong>
                 <ul>
-                  <li>Click on the "Upload CSV" button.</li>
+                  <li>Click on the &quot;Upload CSV&quot; button.</li>
                   <li>
                     Select the CSV file from your local storage and upload it.
                   </li>
@@ -71,8 +71,8 @@ const UserGuide = () => {
                 <strong>3. Input a String:</strong>
                 <ul>
                   <li>
-                    In the "Input String" field, type the string you want to
-                    search for in the selected column.
+                    In the &quot;Input String&quot; field, type the string you
+                    want to search for in the selected column.
                   </li>
                   <li>
                     The application will compare this string with the entries in
@@ -96,7 +96,7 @@ const UserGuide = () => {
               <li>
                 <strong>5. Find Matches:</strong>
                 <ul>
-                  <li>Click the "Find" button.</li>
+                  <li>Click the &quot;Find&quot; button.</li>
                   <li>
                     The application will filter the results based on the string
                     similarity within the given threshold.
@@ -108,10 +108,10 @@ const UserGuide = () => {
                 <strong>6. Replace Filtered Results:</strong>
                 <ul>
                   <li>
-                    In the "Replace With" field, type the string you want to use
-                    to replace the filtered results.
+                    In the &quot;Replace With&quot; field, type the string you
+                    want to use to replace the filtered results.
                   </li>
-                  <li>Click the "Replace" button.</li>
+                  <li>Click the &quot;Replace&quot; button.</li>
                   <li>
                     The application will replace the filtered results with your
                     preferred string.
@@ -122,7 +122,8 @@ const UserGuide = () => {
                 <strong>7. Merge Changes:</strong>
                 <ul>
                   <li>
-                    After replacing the results, click the "Merge" button.
+                    After replacing the results, click the &quot;Mergev&quot;
+                    button.
                   </li>
                   <li>
                     The application will merge the changes back into the
@@ -134,8 +135,8 @@ const UserGuide = () => {
                 <strong>8. Download Merged CSV:</strong>
                 <ul>
                   <li>
-                    Click the "Download Merged CSV" button to download the
-                    updated CSV file with your changes.
+                    Click the &quot;Download Merged CSV&quot; button to download
+                    the updated CSV file with your changes.
                   </li>
                   <li>Save the file to your local storage.</li>
                 </ul>
