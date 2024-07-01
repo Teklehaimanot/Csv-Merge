@@ -25,6 +25,7 @@ export default function Home() {
   const [csvResultLength, setResultCsvLength] = useState<number>(0);
   const [prevResults, setPrevResults] = useState<string>("");
   const [isreplaced, setIsReplaced] = useState<boolean>(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleFileUpload = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -106,7 +107,7 @@ export default function Home() {
         return;
       }
       const response = await axios.post(
-        "http://localhost:5000/api/v1/csv/ColumnSimilarity",
+        `${apiUrl}/csv/ColumnSimilarity`,
         {
           csvContent,
           targetString: inputString,
@@ -145,7 +146,7 @@ export default function Home() {
         return;
       }
       const response = await axios.post(
-        "http://localhost:5000/api/v1/csv/replaceStrings",
+        `${apiUrl}/csv/replaceStrings`,
         {
           csvResults: results,
           replacingString: replacingText,
@@ -186,7 +187,7 @@ export default function Home() {
       }
 
       const response = await axios.post(
-        "http://localhost:5000/api/v1/csv/csvMerge",
+        `${apiUrl}/csv/csvMerge`,
         {
           csvFilteredResult: prevResults,
           csvOriginal: csvContent,
@@ -216,7 +217,6 @@ export default function Home() {
     setMergedDownloadUrl(url);
   };
 
-  // console.log(results, "rst");
   return (
     <div className="flex flex-col  space-y-20 mb-20">
       <div className="flex flex-row  mx-5 space-x-5">
