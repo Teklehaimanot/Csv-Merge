@@ -5,15 +5,15 @@ import { FaFacebook } from "react-icons/fa";
 const Footer = () => {
   return (
     <div>
-      <div className="mx-auto w-full bg-gray-700 shadow-md  text-white h-80 flex items-center">
-        <div className="container mx-auto flex justify-between items-start my-10 w-2/3">
-          <div className=" flex ">
+      <div className="mx-auto w-full bg-gray-700 shadow-md  text-white min:h-80 flex items-center">
+        <div className="container mx-auto flex md:flex-row flex-col space-y-5 justify-between items-start my-10 w-2/3">
+          <div className=" flex md:flex-row flex-col ">
             <div>
               <svg
                 version="1.1"
                 viewBox="0 0 1594 1272"
-                width="200"
-                height="200"
+                width="180"
+                height="180"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
