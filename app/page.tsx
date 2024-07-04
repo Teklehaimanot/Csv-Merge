@@ -8,6 +8,7 @@ import SideBar from "./components/SideBar";
 import Papa from "papaparse";
 import { parse } from "json2csv";
 import UserGuide from "./components/UserGuide";
+import AdBanner from "./components/AdBanner";
 
 export default function Home() {
   const [csvContent, setCsvContent] = useState<string>("");
@@ -222,7 +223,14 @@ export default function Home() {
       <div className="flex flex-row  mx-5 space-x-5">
         <SideBar />
         <div className="w-5/6 ">
-          <div className="flex flex-col  mx-5">
+          <div className="flex flex-col mx-5">
+            <div className=" min-h-20  mt-5">
+              <AdBanner
+                dataAdFormat="auto"
+                dataFullWidthResponsive={true}
+                dataAdSlot={`${process.env.NEXT_PUBLIC_AD_SLOT_2}`}
+              />
+            </div>
             <Header handleFileUpload={handleFileUpload} errors={error} />
             <div className="flex flex-row">
               <div className="w-2/5">
@@ -367,6 +375,13 @@ export default function Home() {
             </div>
           </div>
         </div>
+      </div>
+      <div className=" min-h-20 w-5/6  mx-auto ">
+        <AdBanner
+          dataAdFormat="auto"
+          dataFullWidthResponsive={true}
+          dataAdSlot={`${process.env.NEXT_PUBLIC_AD_SLOT_3}`}
+        />
       </div>
       <UserGuide />
     </div>
