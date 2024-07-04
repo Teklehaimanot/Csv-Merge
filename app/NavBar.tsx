@@ -5,14 +5,14 @@ import { FaFileCsv } from "react-icons/fa6";
 const NavBar = () => {
   return (
     <div className="flex justify-between border-b p-4 bg-gray-800 shadow-md  text-white h-24">
-      <div className="container mx-auto flex justify-between items-center">
+      <div className="container mx-auto flex md:flex-row flex-col justify-between items-center">
         <div className="text-xl font-bold flex flex-row space-x-3">
           <FaFileCsv />
           <Link href="/" aria-label="Home - Smart CSV Tools">
             Smart CSV Tool
           </Link>
         </div>
-        <ul className="flex flex-row space-x-6 items-center">
+        <ul className="flex flex-row md:space-x-6 items-center space-x-10">
           <li>
             <Link href="/" className="hover:underline" aria-label="Home">
               Home
