@@ -220,11 +220,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col  space-y-20 mb-20">
-      <div className="flex flex-row  mx-5 space-x-5">
+      <div className="flex md:flex-row flex-col  md:mx-5 space-x-5">
         <SideBar />
         <div className="w-5/6 ">
           <div className="flex flex-col mx-5">
-            <div className=" min-h-20  mt-5">
+            <div className=" min-h-20 mt-5">
               <AdBanner
                 dataAdFormat="auto"
                 dataFullWidthResponsive={true}
@@ -232,8 +232,8 @@ export default function Home() {
               />
             </div>
             <Header handleFileUpload={handleFileUpload} errors={error} />
-            <div className="flex flex-row">
-              <div className="w-2/5">
+            <div className="flex flex-col md:flex-row">
+              <div className=" md:w-2/5">
                 <p className="text-slate-700 text-base mt-10">
                   Or paste your CSV here
                 </p>
@@ -246,8 +246,8 @@ export default function Home() {
                   className="w-full border mt-2 p-3 text-blue-950 text-sm bg-gray-100 shadow-md"
                 />
               </div>
-              <div className="w-1/5 flex items-center   ">
-                <div className="flex flex-col w-full mx-4">
+              <div className="md:w-1/5 flex items-center   ">
+                <div className="flex md:flex-col w-full mx-4">
                   <form className="w-full" onSubmit={handleSearchSimilarity}>
                     <p className=" text-slate-700">
                       Select the column name you want to match against:
@@ -333,7 +333,7 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-              <div className="w-2/5  my-auto">
+              <div className="md:w-2/5  my-auto">
                 <div className="flex flex-row space-x-5">
                   <p className="text-slate-700 text-base mt-10">Result :</p>
                   <p className="text-slate-700 text-base mt-10">
@@ -376,7 +376,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className=" min-h-20 w-5/6  mx-auto ">
+      <div className=" min-h-20 w-5/6  mx-auto  ">
         <AdBanner
           dataAdFormat="auto"
           dataFullWidthResponsive={true}

@@ -3,7 +3,7 @@ import AdBanner from "./AdBanner";
 
 const SideBar = () => {
   return (
-    <div className="w-1/6 ">
+    <div className="md:w-1/6">
       <AdBanner
         dataAdFormat="autorelaxed"
         dataFullWidthResponsive={true}
