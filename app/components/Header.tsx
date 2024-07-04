@@ -18,7 +18,7 @@ const Header: React.FC<HeaderProps> = ({ handleFileUpload, errors }) => {
         <input
           className="border border-gray-300 my-2  py-2 px-4 block w-full focus:outline-none focus:border-blue-400 bg-gray-100 shadow-md"
           type="file"
-          accept=".csv"
+          accept=".csv, .tsv"
           onChange={handleFileUpload}
         />
       </div>
