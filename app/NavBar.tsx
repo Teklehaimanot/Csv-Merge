@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FaFileCsv } from "react-icons/fa6";
+import { FaGithub } from "react-icons/fa";
 
 const NavBar = () => {
   return (
@@ -18,14 +19,23 @@ const NavBar = () => {
               Home
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="/" className="hover:underline" aria-label="CSV Merge">
               CSV Merge
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link href="/about" className="hover:underline" aria-label="About">
               About
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="https://github.com/Teklehaimanot"
+              className="hover:underline"
+              aria-label="About"
+            >
+              <FaGithub size={24} />
             </Link>
           </li>
         </ul>

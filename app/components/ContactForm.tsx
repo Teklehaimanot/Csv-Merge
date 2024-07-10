@@ -77,7 +77,7 @@ const ContactForm = () => {
       </div>
       <div className="flex space-x-5 items-center">
         <textarea
-          className=" border  p-2  md:w-1/3 w-full"
+          className=" border  p-2  md:w-5/6 w-full"
           rows={7}
           placeholder="Message..."
           id="message"

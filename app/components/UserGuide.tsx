@@ -1,5 +1,6 @@
 import Link from "next/link";
 import React, { useState } from "react";
+import ContactForm from "./ContactForm";
 
 const UserGuide = () => {
   const [showGettingStarted, setShowGettingStarted] = useState(false);
@@ -9,7 +10,7 @@ const UserGuide = () => {
 
   return (
     <div className="mx-auto w-full bg-gray-100 shadow-sm  py-5">
-      <div className="w-2/3 mx-auto flex flex-col space-y-5 my-5">
+      <div className="w-2/3 mx-auto flex flex-col space-y-5 py-16">
         <h2 className="text-2xl text-blue-700">User Guide</h2>
         <p className="text-gray-600">
           Welcome to Smart CSV Filter & Merger, a powerful tool designed to help

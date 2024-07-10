@@ -9,6 +9,7 @@ import Papa from "papaparse";
 import { parse } from "json2csv";
 import UserGuide from "./components/UserGuide";
 import AdBanner from "./components/AdBanner";
+import ContactForm from "./components/ContactForm";
 
 export default function Home() {
   const [csvContent, setCsvContent] = useState<string>("");
@@ -384,6 +385,18 @@ export default function Home() {
         />
       </div>
       <UserGuide />
+      <div className="mx-auto w-2/3 bg-gray-100 shadow-sm flex flex-col p-5">
+        <div>
+          <p className=" text-xl font-serif text-blue-950">
+            You can use this form if you have questions about the tool, to
+            report a malfunction or any other question.To report a problem on
+            this tool, you can also leave a comment on the page of this one.
+          </p>
+        </div>
+        <div className=" mx-auto w-full">
+          <ContactForm />
+        </div>
+      </div>
     </div>
   );
 }

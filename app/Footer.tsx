@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { FaTelegram } from "react-icons/fa6";
-import { FaFacebook } from "react-icons/fa";
+// import { FaFacebook } from "react-icons/fa";
 import Logo from "./components/Logo";
 const Footer = () => {
   return (
@@ -39,9 +39,9 @@ const Footer = () => {
               <li className="flex items-center space-x-2 hover:text-gray-400">
                 <Link href="/">CSV Filter & Merger</Link>
               </li>
-              <li className="flex items-center space-x-2 hover:text-gray-400">
+              {/* <li className="flex items-center space-x-2 hover:text-gray-400">
                 <Link href="/"> CSV Compare </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div>
@@ -52,11 +52,11 @@ const Footer = () => {
                   <FaTelegram size={36} />
                 </Link>
               </li>
-              <li className="flex items-center space-x-2 hover:text-gray-400 ">
+              {/* <li className="flex items-center space-x-2 hover:text-gray-400 ">
                 <Link href="/">
                   <FaFacebook size={36} />
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
