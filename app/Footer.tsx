@@ -4,7 +4,7 @@ import { FaTelegram } from "react-icons/fa6";
 import { FaFacebook } from "react-icons/fa";
 const Footer = () => {
   return (
-    <div>
+    <footer>
       <div className="mx-auto w-full bg-gray-700 shadow-md  text-white min:h-80 flex items-center">
         <div className="container mx-auto flex md:flex-row flex-col space-y-5 justify-between items-start my-10 w-2/3">
           <div className=" flex md:flex-row flex-col ">
@@ -173,7 +173,7 @@ const Footer = () => {
         </div>
       </div>
       <div className=" bg-gray-800 h-24 text-white shadow-md">
-        <div className="flex justify-between w-2/3 mx-auto  py-10">
+        <div className="flex justify-between w-2/3 mx-auto  pt-5">
           <div className="text-sm">
             &copy; {new Date().getFullYear()} Smart CSV Tool. All rights
             reserved.
@@ -186,7 +186,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 

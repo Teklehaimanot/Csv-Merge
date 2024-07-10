@@ -4,7 +4,7 @@ import { FaFileCsv } from "react-icons/fa6";
 
 const NavBar = () => {
   return (
-    <div className="flex justify-between border-b p-4 bg-gray-800 shadow-md  text-white h-24">
+    <nav className="flex justify-between border-b p-4 bg-gray-800 shadow-md  text-white h-24">
       <div className="container mx-auto flex md:flex-row flex-col justify-between items-center">
         <div className="text-xl font-bold flex flex-row space-x-3">
           <FaFileCsv />
@@ -30,7 +30,7 @@ const NavBar = () => {
           </li>
         </ul>
       </div>
-    </div>
+    </nav>
   );
 };
 
