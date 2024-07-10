@@ -6,7 +6,7 @@ import ContactForm from "../components/ContactForm";
 const page = () => {
   return (
     <div className="flex flex-col">
-      <div className=" flex w-2/3 mx-auto mt-20 items-center p-5 space-x-5 shadow-sm">
+      <div className="flex md:flex-row flex-col  md:w-2/3 w-full mx-auto mt-20 items-center p-5 space-x-5 shadow-sm">
         <div className=" border border-white">
           <Logo />
         </div>
@@ -40,7 +40,7 @@ const page = () => {
           tools, you can also leave a comment on the page of this one.
         </p>
       </div>
-      <div className=" w-2/3  mx-auto  mb-20 shadow-sm ">
+      <div className=" md:w-2/3 w-full  mx-auto  mb-20 shadow-sm ">
         <div className="bg-gray-500 text-white  font-bold p-2 flex">
           <strong className="mx-auto text-2xl">Contact me</strong>
         </div>

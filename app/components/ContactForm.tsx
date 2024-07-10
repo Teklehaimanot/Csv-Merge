@@ -53,7 +53,7 @@ const ContactForm = () => {
     <form onSubmit={handleSubmit} className=" p-10 flex flex-col  space-y-5">
       <div>
         <input
-          className=" border w-1/3  p-2"
+          className=" border md:w-1/3 w-full  p-2"
           type="text"
           placeholder="Your Name"
           id="name"
@@ -65,7 +65,7 @@ const ContactForm = () => {
       </div>
       <div>
         <input
-          className=" border  p-2  w-1/3 "
+          className=" border  p-2  md:w-1/3 w-full "
           type="email"
           placeholder="Your Email"
           id="email"
@@ -77,7 +77,7 @@ const ContactForm = () => {
       </div>
       <div className="flex space-x-5 items-center">
         <textarea
-          className=" border  p-2  w-5/6 "
+          className=" border  p-2  md:w-1/3 w-full"
           rows={7}
           placeholder="Message..."
           id="message"
