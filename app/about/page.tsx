@@ -31,7 +31,6 @@ const page = () => {
             </Link>
             .
           </p>
-          {/* <ContactForm /> */}
         </div>
       </div>
       <div className=" w-2/3 py-10  mx-auto">

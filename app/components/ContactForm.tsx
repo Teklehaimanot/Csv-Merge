@@ -14,6 +14,7 @@ const ContactForm = () => {
     message: "",
   });
   const [status, setStatus] = useState<string>("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,7 +29,7 @@ const ContactForm = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("Sending...");
-    const response = await fetch("/api/contact", {
+    const response = await fetch(`${apiUrl}/contact`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
