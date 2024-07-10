@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import { useState, ChangeEvent, FormEvent } from "react";
 
 interface FormData {
@@ -28,24 +29,34 @@ const ContactForm = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setStatus("Sending...");
-    const response = await fetch(`${apiUrl}/contact`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      setStatus("Message sent successfully!");
-      setFormData({
-        name: "",
-        email: "",
-        message: "",
-      });
-    } else {
-      setStatus("Failed to send message.");
+    try {
+      setStatus("Sending...");
+      const response = await axios.post(
+        `${apiUrl}/contact`,
+        {
+          formData,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+        // body: JSON.stringify(formData),
+      );
+      if (response.data) {
+        setStatus("Message sent successfully!");
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      }
+    } catch (err: any) {
+      if (axios.isAxiosError(err) && err.response) {
+        setStatus(err.response.data.error);
+      } else {
+        setStatus("Failed to send message.");
+      }
     }
   };
 
