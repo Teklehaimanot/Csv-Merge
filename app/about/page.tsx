@@ -1,11 +1,12 @@
 import Link from "next/link";
 import React from "react";
 import Logo from "../components/Logo";
+import ContactForm from "../components/ContactForm";
 
 const page = () => {
   return (
-    <div className="h-screen flex">
-      <div className=" flex w-2/3 mx-auto mt-20 items-center h-1/3 p-5 space-x-5 border shadow-md">
+    <div className="flex flex-col">
+      <div className=" flex w-2/3 mx-auto mt-20 items-center p-5 space-x-5 shadow-sm">
         <div className=" border border-white">
           <Logo />
         </div>
@@ -30,6 +31,22 @@ const page = () => {
             </Link>
             .
           </p>
+          {/* <ContactForm /> */}
+        </div>
+      </div>
+      <div className=" w-2/3 py-10  mx-auto">
+        <p>
+          You can use this form if you have questions about my tools, to report
+          a malfunction or any other question.To report a problem on one of the
+          tools, you can also leave a comment on the page of this one.
+        </p>
+      </div>
+      <div className=" w-2/3  mx-auto  mb-20 shadow-sm ">
+        <div className="bg-gray-500 text-white  font-bold p-2 flex">
+          <strong className="mx-auto text-2xl">Contact me</strong>
+        </div>
+        <div className="p-5">
+          <ContactForm />
         </div>
       </div>
     </div>
