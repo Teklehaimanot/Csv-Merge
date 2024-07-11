@@ -12,6 +12,7 @@ const Introducton = () => {
           variations in spelling, and provides functionalities to search,
           replace, and merge data seamlessly.
         </p>
+        <h2 className="text-2xl text-blue-700">Example Scenario</h2>
         <p className=" text-blue-950   font-sans">
           Let&apos;s say you have a CSV file with a column for city names. Due
           to data entry errors, &quot;San Francisco&quot; is spelled in
