@@ -13,12 +13,12 @@ const Introducton = () => {
           replace, and merge data seamlessly.
         </p>
         <p className=" text-blue-950   font-sans">
-          Let's say you have a CSV file with a column for city names. Due to
-          data entry errors, &quot;San Francisco&quot; is spelled in different
-          ways across the rows, such as &quot;San Fransisco,&quot; &quot;San
-          Francsico,&quot; and &quot;San Fransico.&quot; This inconsistency can
-          create problems when analyzing your data. SmartCSVTool can help you
-          identify and correct these variations.
+          Let&apos;s say you have a CSV file with a column for city names. Due
+          to data entry errors, &quot;San Francisco&quot; is spelled in
+          different ways across the rows, such as &quot;San Fransisco,&quot;
+          &quot;San Francsico,&quot; and &quot;San Fransico.&quot; This
+          inconsistency can create problems when analyzing your data.
+          SmartCSVTool can help you identify and correct these variations.
         </p>
       </div>
     </div>
