@@ -11,9 +11,33 @@ import UserGuide from "./components/UserGuide";
 import AdBanner from "./components/AdBanner";
 import ContactForm from "./components/ContactForm";
 
+const initialCsvData = `Name,Age,City
+John,25,New Yrok
+Alice,30,San Francisko
+Michael,28,Los Angles
+Emily,26,Chicgo
+David,33,San Fransico
+Sarah,29,New York
+Daniel,27,Los Angles
+Olivia,31,Chcago
+James,24,San Francsico
+Sophia,32,New Yrok
+Liam,29,Los Angles
+Isabella,28,Chicgo
+Ethan,26,San Fransisco
+Ava,30,New Yrok
+Mason,27,Los Angles
+Emma,25,Chcago
+Alexander,31,San Francisko
+Mia,33,New Yrok
+Benjamin,24,Los Angles
+Charlotte,32,Chicgo`;
+
+const initialColumns = ["Name", "Age", "City"];
+
 export default function Home() {
-  const [csvContent, setCsvContent] = useState<string>("");
-  const [columns, setColumns] = useState<string[]>([]);
+  const [csvContent, setCsvContent] = useState<string>(initialCsvData);
+  const [columns, setColumns] = useState<string[]>(initialColumns);
   const [inputString, setInputString] = useState<string>("");
   const [percentage, setPercentage] = useState<number>(50);
   const [results, setResults] = useState<string>("");
@@ -101,6 +125,7 @@ export default function Home() {
 
   const handleSearchSimilarity = async (event: FormEvent) => {
     event.preventDefault();
+    setError("");
     try {
       if (!inputString || !csvContent || !selectedOption) {
         setError(
@@ -139,7 +164,7 @@ export default function Home() {
 
   const hanldingReplaceText = async (event: FormEvent) => {
     event.preventDefault();
-
+    setError("");
     try {
       if (!replacingText || !results || !selectedOption) {
         setError(
@@ -180,6 +205,7 @@ export default function Home() {
   };
 
   const handleMergeCsv = async () => {
+    setError("");
     try {
       if (!prevResults || !csvContent || !results) {
         setError(
@@ -219,6 +245,7 @@ export default function Home() {
     setMergedDownloadUrl(url);
   };
 
+  console.log(csvContent, "cs");
   return (
     <div className="flex flex-col  space-y-20 mb-20">
       <div className="flex md:flex-row flex-col  md:mx-5 space-x-5">
