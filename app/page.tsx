@@ -14,10 +14,10 @@ import Introducton from "./components/Introducton";
 
 const initialCsvData = `Name,Age,City
 John,25,New Yrok
-Alice,30,San Francisko
+Alice,30,San FraNcisko
 Michael,28,Los Angles
 Emily,26,Chicgo
-David,33,San Fransico
+David,33,San FransiCo
 Sarah,29,New York
 Daniel,27,Los Angles
 Olivia,31,Chcago
@@ -25,11 +25,11 @@ James,24,San Francsico
 Sophia,32,New Yrok
 Liam,29,Los Angles
 Isabella,28,Chicgo
-Ethan,26,San Fransisco
+Ethan,26,San fransisco
 Ava,30,New Yrok
 Mason,27,Los Angles
 Emma,25,Chcago
-Alexander,31,San Francisko
+Alexander,31,san francisko
 Mia,33,New Yrok
 Benjamin,24,Los Angles
 Charlotte,32,Chicgo`;
