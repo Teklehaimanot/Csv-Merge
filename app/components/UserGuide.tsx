@@ -12,12 +12,10 @@ const UserGuide = () => {
     <div className="mx-auto w-full bg-gray-100 shadow-sm  py-5">
       <div className="w-2/3 mx-auto flex flex-col space-y-5 py-16">
         <h2 className="text-2xl text-blue-700">User Guide</h2>
-        <p className="text-gray-600">
-          Welcome to Smart CSV Filter & Merger, a powerful tool designed to help
-          you manage your CSV files with ease. This guide will walk you through
-          the steps to upload a CSV file, filter data based on string
-          similarity, replace filtered results, and merge the changes back into
-          the original CSV data.
+        <p className="text-blue-950 font-sans">
+          This guide will walk you through the steps to upload a CSV file,
+          filter data based on string similarity, replace filtered results, and
+          merge the changes back into the original CSV data.
         </p>
 
         <button
@@ -30,8 +28,10 @@ const UserGuide = () => {
           <div className="content p-2 bg-gray-100 mb-2">
             <ol>
               <li>
-                <strong>1. Upload a CSV File:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">
+                  1. Upload or Paste a CSV File:
+                </strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>Click on the &quot;Upload CSV&quot; button.</li>
                   <li>
                     Select the CSV file from your local storage and upload it.
@@ -54,10 +54,10 @@ const UserGuide = () => {
         </button>
         {showStepByStep && (
           <div className="content p-2 bg-gray-100 mb-2">
-            <ol>
+            <ol className=" flex flex-col space-y-3">
               <li>
-                <strong>2. Select a Column:</strong>
-                <ul>
+                <strong className=" text-blue-900">2. Select a Column:</strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>
                     From the displayed list of columns, choose the column you
                     want to work with.
@@ -69,8 +69,8 @@ const UserGuide = () => {
                 </ul>
               </li>
               <li>
-                <strong>3. Input a String:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">3. Input a String:</strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>
                     In the &quot;Input String&quot; field, type the string you
                     want to search for in the selected column.
@@ -82,8 +82,10 @@ const UserGuide = () => {
                 </ul>
               </li>
               <li>
-                <strong>4. Set Similarity Threshold:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">
+                  4. Set Similarity Threshold:
+                </strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>
                     Adjust the similarity threshold slider to set how closely
                     the entries should match your input string.
@@ -95,8 +97,8 @@ const UserGuide = () => {
                 </ul>
               </li>
               <li>
-                <strong>5. Find Matches:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">5. Find Matches:</strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>Click the &quot;Find&quot; button.</li>
                   <li>
                     The application will filter the results based on the string
@@ -106,8 +108,10 @@ const UserGuide = () => {
                 </ul>
               </li>
               <li>
-                <strong>6. Replace Filtered Results:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">
+                  6. Replace Filtered Results:
+                </strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>
                     In the &quot;Replace With&quot; field, type the string you
                     want to use to replace the filtered results.
@@ -120,8 +124,8 @@ const UserGuide = () => {
                 </ul>
               </li>
               <li>
-                <strong>7. Merge Changes:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">7. Merge Changes:</strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>
                     After replacing the results, click the &quot;Mergev&quot;
                     button.
@@ -133,8 +137,10 @@ const UserGuide = () => {
                 </ul>
               </li>
               <li>
-                <strong>8. Download Merged CSV:</strong>
-                <ul>
+                <strong className=" text-blue-900 ">
+                  8. Download Merged CSV:
+                </strong>
+                <ul className=" text-gray-600 font-mono text-sm">
                   <li>
                     Click the &quot;Download Merged CSV&quot; button to download
                     the updated CSV file with your changes.
@@ -154,21 +160,25 @@ const UserGuide = () => {
         </button>
         {showTips && (
           <div className="content p-2 bg-gray-100 mb-2">
-            <ul>
+            <ul className=" flex flex-col space-y-1 text-gray-600 font-mono text-sm">
               <li>
-                <strong>Check Column Headers:</strong> Ensure that your CSV file
-                has proper column headers for better accuracy in column
-                selection.
+                <strong className=" text-blue-900">
+                  Check Column Headers:
+                </strong>{" "}
+                Ensure that your CSV file has proper column headers for better
+                accuracy in column selection.
               </li>
               <li>
-                <strong>Adjust Threshold Carefully:</strong> The similarity
-                threshold is crucial for accurate filtering. Adjust it based on
-                your needs to get the best results.
+                <strong className=" text-blue-900 ">
+                  Adjust Threshold Carefully:
+                </strong>{" "}
+                The similarity threshold is crucial for accurate filtering.
+                Adjust it based on your needs to get the best results.
               </li>
               <li>
-                <strong>Review Changes:</strong> Before merging and downloading,
-                review the filtered and replaced results to ensure they meet
-                your expectations.
+                <strong className=" text-blue-900 ">Review Changes:</strong>{" "}
+                Before merging and downloading, review the filtered and replaced
+                results to ensure they meet your expectations.
               </li>
             </ul>
           </div>
@@ -182,26 +192,31 @@ const UserGuide = () => {
         </button>
         {showTroubleshooting && (
           <div className="content p-2 bg-gray-100 mb-2">
-            <ul>
+            <ul className=" flex flex-col space-y-1 text-gray-600 font-mono text-sm">
               <li>
-                <strong>File Upload Issues:</strong> If the CSV file fails to
-                upload, ensure it is properly formatted and not corrupted.
+                <strong className=" text-blue-900 ">File Upload Issues:</strong>{" "}
+                If the CSV file fails to upload, ensure it is properly formatted
+                and not corrupted.
               </li>
               <li>
-                <strong>No Filtered Results:</strong> If no results are
-                filtered, try lowering the similarity threshold or check if the
-                input string is correct.
+                <strong className=" text-blue-900 ">
+                  No Filtered Results:
+                </strong>{" "}
+                If no results are filtered, try lowering the similarity
+                threshold or check if the input string is correct.
               </li>
               <li>
-                <strong>Errors in Replacement:</strong> Ensure that the
-                &quot;Replace With&quot; field is not empty when replacing the
-                filtered results.
+                <strong className=" text-blue-900 ">
+                  Errors in Replacement:
+                </strong>{" "}
+                Ensure that the &quot;Replace With&quot; field is not empty when
+                replacing the filtered results.
               </li>
             </ul>
           </div>
         )}
 
-        <p>
+        <p className=" text-blue-950 font-sans">
           We hope this guide helps you navigate and utilize the Smart CSV Filter
           & Merger application effectively. For further assistance, refer to our{" "}
           or contact our support team at{" "}
@@ -214,7 +229,7 @@ const UserGuide = () => {
           .
         </p>
 
-        <p>Happy CSV managing!</p>
+        <p className=" text-blue-950 font-sans">Happy CSV managing!</p>
       </div>
     </div>
   );
