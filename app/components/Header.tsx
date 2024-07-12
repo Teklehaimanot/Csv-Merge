@@ -5,7 +5,7 @@ interface HeaderProps {
 }
 const Header: React.FC<HeaderProps> = ({ handleFileUpload, errors }) => {
   return (
-    <header className="flex justify-between">
+    <header className="flex justify-between md:flex-row flex-col">
       <div className="md:w-2/5  pt-10">
         <h1 className="text-blue-700 text-4xl font-bold w-full my-5">
           SMART CSV FILTER & MERGER
