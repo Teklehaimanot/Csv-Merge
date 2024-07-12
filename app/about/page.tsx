@@ -35,14 +35,14 @@ const page = () => {
       </div>
       <div className=" w-2/3 py-10  mx-auto">
         <p>
-          You can use this form if you have questions about my tools, to report
+          You can use this form if you have questions about our tools, to report
           a malfunction or any other question.To report a problem on one of the
           tools, you can also leave a comment on the page of this one.
         </p>
       </div>
       <div className=" md:w-2/3 w-full  mx-auto  mb-20 shadow-sm ">
         <div className="bg-gray-500 text-white  font-bold p-2 flex">
-          <strong className="mx-auto text-2xl">Contact me</strong>
+          <strong className="mx-auto text-2xl">Contact us</strong>
         </div>
         <div className="p-5">
           <ContactForm />

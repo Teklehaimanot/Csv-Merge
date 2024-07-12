@@ -1,15 +1,19 @@
 import Link from "next/link";
 import React from "react";
 import { FaFileCsv } from "react-icons/fa6";
-import { FaGithub } from "react-icons/fa";
+import { FaTelegram } from "react-icons/fa6";
 
 const NavBar = () => {
   return (
     <nav className="flex justify-between border-b p-4 bg-gray-800 shadow-md  text-white h-24">
       <div className="container mx-auto flex md:flex-row flex-col justify-between items-center">
-        <div className="text-xl font-bold flex flex-row space-x-3">
+        <div className="text-xl font-bold flex flex-row space-x-3 hover:underline">
           <FaFileCsv />
-          <Link href="/" aria-label="Home - Smart CSV Tools">
+          <Link
+            href="/"
+            aria-label="Home - Smart CSV Tools"
+            className=" hover:text-gray-300 "
+          >
             Smart CSV Tool
           </Link>
         </div>
@@ -30,12 +34,8 @@ const NavBar = () => {
             </Link>
           </li>
           <li>
-            <Link
-              href="https://github.com/Teklehaimanot"
-              className="hover:underline"
-              aria-label="About"
-            >
-              <FaGithub size={24} />
+            <Link href="https://t.me/kelal_tech24" aria-label="About">
+              <FaTelegram size={28} />
             </Link>
           </li>
         </ul>
