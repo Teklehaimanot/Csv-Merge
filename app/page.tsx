@@ -276,7 +276,7 @@ export default function Home() {
                 />
               </div>
               <div className="md:w-1/5 flex items-center   ">
-                <div className="flex md:flex-col w-full mx-4">
+                <div className="flex flex-col w-full mx-4">
                   <form className="w-full" onSubmit={handleSearchSimilarity}>
                     <p className=" text-slate-700">
                       Select the column name you want to match against:
@@ -414,7 +414,7 @@ export default function Home() {
         />
       </div>
       <UserGuide />
-      <div className="mx-auto w-2/3 bg-gray-100 shadow-sm flex flex-col p-5">
+      <div className="mx-auto md:w-2/3 bg-gray-100 shadow-sm flex flex-col p-5">
         <div>
           <p className=" text-xl font-serif text-blue-950">
             You can use this form if you have questions about the tool, to
