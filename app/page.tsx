@@ -48,7 +48,7 @@ export default function Home() {
   const [error, setError] = useState<string>("");
   const [mergedDownloadUrl, setMergedDownloadUrl] = useState<string>("");
   const [mergedCsvContent, setMergedCsvContent] = useState<string>("");
-  const [csvTotal, setCsvTotal] = useState<number>(0);
+  const [csvTotal, setCsvTotal] = useState<number>(20);
   const [csvResultLength, setResultCsvLength] = useState<number>(0);
   const [prevResults, setPrevResults] = useState<string>("");
   const [isreplaced, setIsReplaced] = useState<boolean>(false);
