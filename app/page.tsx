@@ -246,7 +246,16 @@ export default function Home() {
     setMergedDownloadUrl(url);
   };
 
-  console.log(csvContent, "cs");
+  const handlePersentage = (e: any) => {
+    const inputValue = e.target.value;
+    if (
+      inputValue === "" ||
+      (Number(inputValue) <= 99 && Number(inputValue) >= 0)
+    ) {
+      setPercentage(inputValue);
+    }
+  };
+
   return (
     <div className="flex flex-col  space-y-20 mb-20">
       <div className="flex md:flex-row flex-col  md:mx-5 space-x-5">
@@ -313,9 +322,9 @@ export default function Home() {
                           type="number"
                           className="border py-3 w-2/5 bg-gray-100 shadow-md px-3"
                           value={percentage}
-                          onChange={(e) =>
-                            setPercentage(Number(e.target.value))
-                          }
+                          onChange={handlePersentage}
+                          min={0}
+                          max={99}
                         />
                       </div>
                       <div className="my-5">
