@@ -128,10 +128,14 @@ export default function Home() {
     event.preventDefault();
     setError("");
     try {
-      if (!inputString || !csvContent || !selectedOption) {
-        setError(
-          "All CSV content, target string, and column name are required."
-        );
+      if (!csvContent) {
+        setError("Please upload or paste your CSV.");
+        return;
+      } else if (!selectedOption) {
+        setError("Please select a column name.");
+        return;
+      } else if (!inputString) {
+        setError("Please insert the target string you want to match.");
         return;
       }
       const response = await axios.post(
@@ -157,8 +161,10 @@ export default function Home() {
     } catch (err: any) {
       if (axios.isAxiosError(err) && err.response) {
         setError(err.response.data.error);
+        setResults("");
       } else {
         setError("An unexpected error occurred.");
+        setResults("");
       }
     }
   };
@@ -167,7 +173,13 @@ export default function Home() {
     event.preventDefault();
     setError("");
     try {
-      if (!replacingText || !results || !selectedOption) {
+      if (!selectedOption) {
+        setError("Please select a column name.");
+        return;
+      } else if (!replacingText) {
+        setError("Please insert the replacing text|string");
+        return;
+      } else if (!results) {
         setError(
           "All CSV result, replacing string, and column name are required."
         );
