@@ -275,6 +275,19 @@ export default function Home() {
         <div className="w-5/6 ">
           <div className="flex flex-col mx-5">
             <div className=" min-h-20 mt-5">
+              <div className=" flex space-x-1  items-center flex-row-reverse ">
+                <a
+                  href="https://buymeacoffee.com/kelaltech"
+                  target="blank"
+                  className="bg-orange-100 flex items-center pr-2 rounded-s-md font-extralight space-x-2 hover:text-blue-700"
+                >
+                  <img
+                    src="https://cdn.ko-fi.com/cdn/useruploads/1a525c15-622b-4291-8e6d-40b503289e1e.png"
+                    className=" w-10 h-10 bg-cover block  "
+                  />{" "}
+                  Buy me a coffee
+                </a>
+              </div>
               <AdBanner
                 dataAdFormat="auto"
                 dataFullWidthResponsive={true}
